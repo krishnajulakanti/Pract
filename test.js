@@ -1,5 +1,14 @@
 import employees from "./list.js"
 
+let obj = {}
+employees.forEach(emp => {
+  if (!obj[emp.department]) {
+    obj[emp.department] = []
+  }
+  obj[emp.department].push(emp.name)
+})
+// console.log(obj)
+
 let grpEmpByDept = employees.reduce((acc, emp) => {
   if (!acc[emp.department]) {
     acc[emp.department] = []
@@ -9,25 +18,23 @@ let grpEmpByDept = employees.reduce((acc, emp) => {
 }, {})
 // console.log(grpEmpByDept)
 
-let obj = {}
-employees.forEach(emp => {
-  if(!obj[emp.department]) {
-    obj[emp.department] = []
-  }
-  obj[emp.department].push(emp.name)
-})
-// console.log(obj)
-
 
 // Count Employees per department
-let countByDept = employees.reduce((acc, emp)=>{
-  if(!acc[emp.department]) {
-    acc[emp.department] = 1
-  } else {
-    acc[emp.department]++
-  }
+// let countByDept = employees.reduce((acc, emp)=>{
+//   if(!acc[emp.department]) {
+//     acc[emp.department] = 1
+//   } else {
+//     acc[emp.department]++
+//   }
+//   return acc
+// },{})
+
+let countByDept = employees.reduce((acc, emp) => {
+  if (!acc[emp.department]) {
+    acc[emp.department] = []
+  } acc[emp.department]++
   return acc
-},{})
+}, {})
 
 // console.log(countByDept)
 
@@ -41,7 +48,7 @@ let salariesByDept = employees.reduce((acc, emp) => {
   }
   return acc
 }, {})
-console.log(salariesByDept, "salariesByDept")
+// console.log(salariesByDept, "salariesByDept")
 
 let salariesTotal = employees.reduce((acc, emp) => {
   if (!acc[emp.department]) {
@@ -50,20 +57,22 @@ let salariesTotal = employees.reduce((acc, emp) => {
   acc[emp.department].totalSalary += emp.salary
   return acc
 }, {})
-console.log(salariesTotal, "salariesTotal")
+// console.log(salariesTotal, "salariesTotal")
 
 
 // Total Emp count & Aggregate Salary by Department
 let empCountAndAggSalary = employees.reduce((acc, emp)=>{
   if(!acc[emp.department]){
-    acc[emp.department] = { totalCount: 0, totalSalary: 0, avgSalary: 0, list: []}
+    acc[emp.department] = { totalCount: 0, totalSalary: 0, avgSalary: 0, totalAge:0 ,avgAge: 0, list: []}
   }
   acc[emp.department].list.push(emp.name)
   acc[emp.department].totalSalary += emp.salary;
+  acc[emp.department].totalAge += emp.age;
   acc[emp.department].totalCount += 1;
   acc[emp.department].avgSalary = (acc[emp.department].totalSalary / acc[emp.department].totalCount)
+  acc[emp.department].avgAge = (acc[emp.department].totalAge / acc[emp.department].totalCount)
   return acc
 }, {})
-// console.log(empCountAndAggSalary)
+console.log(empCountAndAggSalary)
 
 // Calculate Average Age by Department
